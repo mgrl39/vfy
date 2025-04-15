@@ -1,0 +1,7 @@
+-e Exercise: Hello World
+------------------
+
+Write a program that prints "Hello World" (without quotes) and ends with a newline.
+
+Example output:
+Hello World
