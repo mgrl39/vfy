@@ -1,146 +1,211 @@
-# VFY - Programming Exercises Verification Tool
+<div align="center">
+  
+# 🚀 VFY - Verify Your Code
 
-VFY es una herramienta para practicar ejercicios de programación en C con verificación automática.
+<img src="https://img.shields.io/badge/language-C-blue.svg" alt="Language C">
+<img src="https://img.shields.io/badge/platform-Linux%20%7C%20macOS-lightgrey.svg" alt="Platform">
+<img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License MIT">
+<img src="https://img.shields.io/badge/version-1.0.0-orange.svg" alt="Version">
 
-## Características
+**A modern CLI tool for practicing C programming exercises with automatic verification.**
 
-- **Ejercicios organizados por niveles** de dificultad
-- **Verificación automática** de tus soluciones
-- **Plantillas de código** para empezar rápidamente
-- **Interfaz amigable** con colores y formato agradable
-- **Personalizable** a través de configuraciones
-- **Creación de ejercicios** para profesores o usuarios que quieran contribuir
+![Terminal Demo](https://github.com/mgrl39/vfy/raw/assets/demo.gif)
 
-## Instalación
+</div>
 
-### Usando pip (recomendado)
+---
 
-La forma más fácil de instalar VFY es usando pip:
+## 📋 Table of Contents
+
+- [🌟 Features](#-features)
+- [🛠️ Installation](#️-installation)
+  - [Using pip (recommended)](#using-pip-recommended)
+  - [Single-user installation](#single-user-installation)
+  - [System-wide installation](#system-wide-installation)
+- [📝 Usage](#-usage)
+- [⚙️ Configuration](#️-configuration)
+- [🧩 Creating Exercises](#-creating-exercises)
+- [🔄 Examples](#-examples)
+- [🗑️ Uninstallation](#️-uninstallation)
+- [🤝 Contributing](#-contributing)
+- [📜 License](#-license)
+
+---
+
+## 🌟 Features
+
+VFY (Verify Your Code) is designed to make learning C programming more fun and effective with:
+
+- **📚 Structured Learning Path** - Exercises organized by skill levels (0-7)
+- **✅ Automatic Verification** - Instant feedback on your solutions
+- **📋 Code Templates** - Quick start with helpful boilerplate code
+- **🎨 Beautiful Interface** - Colorful and user-friendly terminal UI
+- **🛠️ Customizable Settings** - Configure directories, editor, and more
+- **🧩 Exercise Creation** - Create and share your own programming challenges
+
+## 🛠️ Installation
+
+### Using pip (recommended)
+
+The easiest way to install VFY:
 
 ```bash
-# Instalar directamente desde GitHub
-pip install git+https://github.com/tu-usuario/vfy.git
+# Install directly from GitHub
+pip install git+https://github.com/mgrl39/vfy.git
 
-# O desde el directorio local
-git clone https://github.com/tu-usuario/vfy.git
+# Or from local directory
+git clone https://github.com/mgrl39/vfy.git
 cd vfy
 pip install -e .
 ```
 
-### Instalación para un solo usuario (alternativa)
+### Single-user installation
 
 ```bash
-# Clonar el repositorio
-git clone https://github.com/tu-usuario/vfy.git
+# Clone the repository
+git clone https://github.com/mgrl39/vfy.git
 cd vfy
 
-# Instalar para el usuario actual (no requiere sudo)
+# Install for current user (no sudo required)
 make user-install
 
-# Añadir al PATH (añade esta línea a tu .bashrc o .zshrc)
+# Add to PATH (add this line to your .bashrc or .zshrc)
 echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-### Instalación a nivel de sistema
+### System-wide installation
 
 ```bash
-# Clonar el repositorio
-git clone https://github.com/tu-usuario/vfy.git
+# Clone the repository
+git clone https://github.com/mgrl39/vfy.git
 cd vfy
 
-# Instalar a nivel de sistema (requiere sudo)
+# Install system-wide (requires sudo)
 sudo make install
 ```
 
-## Uso básico
+## 📝 Usage
+
+VFY provides an intuitive command-line interface:
+
+| Command | Description |
+|---------|-------------|
+| `vfy help` | Show all available commands |
+| `vfy list` | List all available exercise levels |
+| `vfy list <level>` | List exercises in a specific level |
+| `vfy get <level>` | Get a random exercise from a level |
+| `vfy edit` | Open current exercise in your editor |
+| `vfy check` | Verify your solution against expected output |
+| `vfy status` | Show current exercise status |
+| `vfy config` | Show or modify configuration options |
+| `vfy create` | Create a new exercise |
+
+## ⚙️ Configuration
+
+Customize VFY to fit your preferences:
 
 ```bash
-# Ver ayuda
-vfy help
-
-# Listar niveles disponibles
-vfy list
-
-# Listar ejercicios en el nivel 1
-vfy list 1
-
-# Obtener un ejercicio aleatorio del nivel 1
-vfy get 1
-
-# Editar la solución del ejercicio actual
-vfy edit
-
-# Comprobar la solución
-vfy check
-
-# Ver el estado del ejercicio actual
-vfy status
-```
-
-## Personalización
-
-Puedes configurar varias opciones:
-
-```bash
-# Ver configuración actual
+# View current configuration
 vfy config
 
-# Cambiar ubicación de los ejercicios
-vfy config exercises_dir ~/mis_ejercicios
+# Change exercise directory
+vfy config exercises_dir ~/my_exercises
 
-# Cambiar editor por defecto
+# Change default editor
 vfy config editor nano
 
-# Activar/desactivar apertura automática del editor
+# Toggle auto-open editor feature
 vfy config auto_open_editor false
 
-# Añadir flags del compilador
+# Add compiler flags
 vfy config compiler_flags "-Wall -Wextra -Werror"
 ```
 
-También puedes usar variables de entorno:
+You can also use environment variables:
 
 ```bash
-# Definir ubicación de los ejercicios
-export VFY_EXERCISES_DIR=~/mis_ejercicios
+# Define exercise location
+export VFY_EXERCISES_DIR=~/my_exercises
 
-# Definir ubicación de los sujetos
-export VFY_SUBJECTS_DIR=~/mis_ejercicios_sujetos
+# Define subject location
+export VFY_SUBJECTS_DIR=~/my_exercise_subjects
 
-# Definir compilador
+# Define compiler
 export CC=gcc
 ```
 
-## Creación de ejercicios
+## 🧩 Creating Exercises
 
-Puedes crear tus propios ejercicios:
+Create your own exercises to practice or share with others:
 
 ```bash
+# Interactive exercise creation
 vfy create
 ```
 
-O crear ejercicios manualmente:
+Or create exercises manually:
 
-1. Crea un directorio en `~/.vfy/subjects/level_X/nombre_ejercicio`
-2. Añade los siguientes archivos:
-   - `subject.txt`: Descripción del ejercicio
-   - `expected_output.txt`: Salida esperada del programa
-   - `template.c`: Plantilla de código para el usuario
+1. Create a directory at `~/.vfy/subjects/level_X/exercise_name`
+2. Add the following files:
+   - `subject.txt`: Exercise description
+   - `expected_output.txt`: Expected program output
+   - `template.c`: Template code for users
 
-## Desinstalación
+## 🔄 Examples
+
+Here's how a typical workflow looks:
 
 ```bash
-# Desinstalar (con sudo si usaste instalación a nivel de sistema)
+# Get a random exercise from level 1
+vfy get 1
+
+# The exercise details will be displayed
+# A working directory is created with a template
+
+# Open the exercise in your editor
+vfy edit
+
+# After coding your solution
+vfy check
+
+# If correct, you'll see:
+# ✅ Your solution is correct!
+
+# If not, you'll see:
+# ❌ Output doesn't match expected result.
+# With a detailed diff of what went wrong
+```
+
+## 🗑️ Uninstallation
+
+```bash
+# Uninstall (with sudo if you used system installation)
 sudo make uninstall
 ```
 
-## Contribución
+## 🤝 Contributing
 
-Si quieres contribuir a este proyecto:
+We welcome contributions to make VFY better:
 
-1. Haz un fork del repositorio
-2. Crea una rama (`git checkout -b feature/nueva-caracteristica`)
-3. Haz commit de tus cambios (`git commit -am 'Añade nueva característica'`)
-4. Push a la rama (`git push origin feature/nueva-caracteristica`)
-5. Crea un Pull Request 
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Commit your changes (`git commit -am 'Add amazing feature'`)
+5. Push to the branch (`git push origin feature/amazing-feature`)
+6. Open a Pull Request
+
+## 📜 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
+<div align="center">
+  
+**Created with ❤️ for C programming enthusiasts**
+
+<a href="https://github.com/mgrl39/vfy/issues">Report Bug</a> · 
+<a href="https://github.com/mgrl39/vfy/issues">Request Feature</a>
+
+</div> 
