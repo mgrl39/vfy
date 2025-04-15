@@ -1,0 +1,22 @@
+Nombre del ejercicio: count_vowels
+Archivos esperados: count_vowels.c
+Funciones permitidas: write
+--------------------------------------------------------------------------------
+
+Escribe un programa que tome una cadena y muestre el número de vocales (a, e, i, o, u)
+que contiene, seguido de un salto de línea. Tanto mayúsculas como minúsculas cuentan.
+
+Si el número de parámetros no es 1, muestra un salto de línea.
+
+Ejemplos:
+
+$> ./count_vowels "Hello World" | cat -e
+3$
+$> ./count_vowels "aEiOu" | cat -e
+5$
+$> ./count_vowels "1234567890" | cat -e
+0$
+$> ./count_vowels "a" "b" | cat -e
+$
+$> ./count_vowels "Programming is FUN!" | cat -e
+5$ 

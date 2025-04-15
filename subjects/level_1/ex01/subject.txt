@@ -1,4 +1,4 @@
--e Exercise: Sum Two Numbers
+Exercise: Sum Two Numbers
 ------------------
 
 Write a program that adds two integers (42 and 27) and prints the result.

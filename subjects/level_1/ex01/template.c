@@ -1,4 +1,4 @@
--e #include <stdio.h>
+#include <stdio.h>
 
 int main(void) {
     // Add the numbers 42 and 27

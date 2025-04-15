@@ -1,0 +1,27 @@
+Nombre del ejercicio: find_median
+Archivos esperados: find_median.c
+Funciones permitidas: printf, atoi
+--------------------------------------------------------------------------------
+
+Escribe un programa que tome una lista de números enteros como argumentos y muestre
+el valor de la mediana, seguido de un salto de línea.
+
+La mediana es el valor que separa la mitad superior de la mitad inferior de una 
+lista de datos. Si la lista tiene un número impar de elementos, la mediana es el 
+elemento del medio. Si la lista tiene un número par de elementos, la mediana es 
+el promedio de los dos elementos centrales.
+
+Si no hay argumentos, muestra un salto de línea.
+
+Ejemplos:
+
+$> ./find_median 5 3 7 1 | cat -e
+4$
+$> ./find_median 42 | cat -e
+42$
+$> ./find_median 1 2 3 4 5 | cat -e
+3$
+$> ./find_median 10 20 | cat -e
+15$
+$> ./find_median | cat -e
+$ 

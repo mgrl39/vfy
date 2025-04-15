@@ -1,4 +1,4 @@
--e Exercise: FizzBuzz
+Exercise: FizzBuzz
 ------------------
 
 Write a program that prints the numbers from 1 to 15.

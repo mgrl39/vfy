@@ -1,0 +1,33 @@
+Nombre del ejercicio: binary_tree_height
+Archivos esperados: binary_tree_height.c
+Funciones permitidas: printf, malloc, free
+--------------------------------------------------------------------------------
+
+Escribe un programa que calcule la altura de un árbol binario representado como 
+una secuencia de números en notación de array.
+
+El programa toma una lista de números enteros como argumentos, donde:
+- El primer número es la raíz del árbol
+- Para un nodo en la posición i, sus hijos están en las posiciones 2*i+1 (izquierdo) 
+  y 2*i+2 (derecho)
+- Un valor de -1 indica que no hay nodo en esa posición
+
+La altura de un árbol es la longitud del camino más largo desde la raíz hasta 
+cualquier hoja. Un árbol con solo la raíz tiene altura 0.
+
+El programa debe mostrar la altura del árbol, seguida de un salto de línea.
+
+Si no hay argumentos, muestra un 0 seguido de un salto de línea.
+
+Ejemplos:
+
+$> ./binary_tree_height 1 2 3 | cat -e
+1$
+$> ./binary_tree_height 10 5 20 3 7 15 25 | cat -e
+2$
+$> ./binary_tree_height 1 2 3 4 5 -1 -1 8 | cat -e
+3$
+$> ./binary_tree_height 1 | cat -e
+0$
+$> ./binary_tree_height | cat -e
+0$ 

@@ -1,0 +1,23 @@
+Nombre del ejercicio: last_char
+Archivos esperados: last_char.c
+Funciones permitidas: write
+--------------------------------------------------------------------------------
+
+Escribe un programa que tome una cadena y muestre su último carácter, seguido de
+un salto de línea.
+
+Si el número de parámetros no es 1, o si la cadena está vacía, simplemente
+muestra un salto de línea.
+
+Ejemplos:
+
+$> ./last_char "HELLO" | cat -e
+O$
+$> ./last_char "abcdefghijklm" | cat -e
+m$
+$> ./last_char "" | cat -e
+$
+$> ./last_char "a" "b" | cat -e
+$
+$> ./last_char "xyz" | cat -e
+z$ 

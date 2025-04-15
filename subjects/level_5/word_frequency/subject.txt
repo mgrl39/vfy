@@ -1,0 +1,37 @@
+Nombre del ejercicio: word_frequency
+Archivos esperados: word_frequency.c
+Funciones permitidas: printf, malloc, free
+--------------------------------------------------------------------------------
+
+Escribe un programa que tome una cadena como argumento y muestre cada palabra única
+junto con su frecuencia de aparición (cuántas veces se repite), ordenadas por 
+frecuencia (de mayor a menor).
+
+Una palabra se define como una secuencia de caracteres alfanuméricos. Las palabras
+están separadas por espacios, tabulaciones o signos de puntuación.
+Las palabras se consideran iguales independientemente de mayúsculas/minúsculas.
+
+Si hay palabras con la misma frecuencia, deben mostrarse en orden alfabético.
+Cada línea de salida debe tener el formato "palabra:frecuencia", seguido de un salto de línea.
+
+Si el número de argumentos no es 1, muestra un salto de línea.
+
+Ejemplos:
+
+$> ./word_frequency "The quick brown fox jumps over the lazy dog. The dog barks." | cat -e
+the:2$
+dog:2$
+brown:1$
+barks:1$
+fox:1$
+jumps:1$
+lazy:1$
+over:1$
+quick:1$
+$> ./word_frequency "hello hello HELLO world WORLD" | cat -e
+hello:3$
+world:2$
+$> ./word_frequency "a" | cat -e
+a:1$
+$> ./word_frequency | cat -e
+$ 

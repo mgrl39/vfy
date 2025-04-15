@@ -1,0 +1,33 @@
+Nombre del ejercicio: rot_cipher
+Archivos esperados: rot_cipher.c
+Funciones permitidas: write
+--------------------------------------------------------------------------------
+
+Escribe un programa que tome dos argumentos:
+1. Una cadena de texto
+2. Un número entero N
+
+El programa debe aplicar una rotación de N posiciones a cada letra de la cadena
+(solo letras, los demás caracteres no se modifican), y mostrar el resultado
+seguido de un salto de línea.
+
+Si N es positivo, las letras rotan hacia adelante en el alfabeto.
+Si N es negativo, las letras rotan hacia atrás.
+Las mayúsculas y minúsculas se procesan por separado pero de la misma manera.
+
+Si el número de argumentos no es exactamente 2, muestra un salto de línea.
+
+Ejemplos:
+
+$> ./rot_cipher "abc" 1 | cat -e
+bcd$
+$> ./rot_cipher "HELLO" 2 | cat -e
+JGNNQ$
+$> ./rot_cipher "z" 1 | cat -e
+a$
+$> ./rot_cipher "Hello, World!" 13 | cat -e
+Uryyb, Jbeyq!$
+$> ./rot_cipher "The quick brown fox jumps over the lazy dog" -1 | cat -e
+Sgd pthbj aqnvm enw itlor nudq sgd kzyx cnf$
+$> ./rot_cipher "abc" | cat -e
+$ 
