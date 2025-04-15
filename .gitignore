@@ -26,5 +26,4 @@ wheels/
 .DS_Store
 
 # Archivos específicos de vfy
-.vfy/
 vfy_exercises/ 

@@ -19,7 +19,7 @@ WHITE  = \033[0;37m
 BOLD   = \033[1m
 RESET  = \033[0m
 
-.PHONY: all install uninstall clean help setup user-install
+.PHONY: all install uninstall clean help setup
 
 all: help
 
@@ -28,10 +28,10 @@ help:
 	@echo "${BOLD}===============================================${RESET}"
 	@echo ""
 	@echo "${BOLD}Usage:${RESET}"
-	@echo "  ${YELLOW}make setup${RESET}     - Create necessary directories and example exercises"
-	@echo "  ${GREEN}make install${RESET}   - Install vfy and setup exercise structure"
-	@echo "  ${RED}make uninstall${RESET} - Uninstall vfy"
-	@echo "  ${BLUE}make clean${RESET}     - Remove temporary files"
+	@echo "  ${YELLOW}make setup${RESET}         - Create necessary directories and example exercises"
+	@echo "  ${GREEN}make install${RESET}        - Install vfy system-wide"
+	@echo "  ${RED}make uninstall${RESET}      - Uninstall vfy"
+	@echo "  ${BLUE}make clean${RESET}          - Remove temporary files"
 	@echo ""
 	@echo "${BOLD}After installation:${RESET}"
 	@echo "  ${CYAN}vfy help${RESET}        - Show program help"
@@ -74,7 +74,7 @@ install: setup
 	# Copy program files to shared location
 	@cp $(SRC_FILES) $(PROGRAM_SHARE_DIR)/src/
 	
-	# Create wrapper script
+	# Create wrapper script with clean environment
 	@echo "#!/bin/bash" > $(INSTALL_DIR)/$(NAME)
 	@echo "# Create user's .vfy directory if it doesn't exist" >> $(INSTALL_DIR)/$(NAME)
 	@echo "mkdir -p \$$HOME/.vfy/subjects" >> $(INSTALL_DIR)/$(NAME)
@@ -87,10 +87,11 @@ install: setup
 	@echo "" >> $(INSTALL_DIR)/$(NAME)
 	@echo "# Copy exercise subjects if they don't exist" >> $(INSTALL_DIR)/$(NAME)
 	@echo "if [ ! -d \$$HOME/.vfy/subjects/level_1 ]; then" >> $(INSTALL_DIR)/$(NAME)
-	@echo "  cp -r subjects/* \$$HOME/.vfy/subjects/ 2>/dev/null || :" >> $(INSTALL_DIR)/$(NAME)
+	@echo "  cp -r $(PROGRAM_SHARE_DIR)/subjects/* \$$HOME/.vfy/subjects/ 2>/dev/null || :" >> $(INSTALL_DIR)/$(NAME)
 	@echo "fi" >> $(INSTALL_DIR)/$(NAME)
 	@echo "" >> $(INSTALL_DIR)/$(NAME)
-	@echo "python3 \$$HOME/.vfy/program/vfy.py \"\$$@\"" >> $(INSTALL_DIR)/$(NAME)
+	@echo "# Run with clean environment to avoid Python conflicts" >> $(INSTALL_DIR)/$(NAME)
+	@echo "env -i HOME=\$$HOME PATH=/usr/bin:/bin:/usr/local/bin LANG=\$$LANG python3 \$$HOME/.vfy/program/vfy.py \"\$$@\"" >> $(INSTALL_DIR)/$(NAME)
 	@chmod +x $(INSTALL_DIR)/$(NAME)
 	
 	# Copy example exercises to system-wide location
@@ -104,30 +105,9 @@ install: setup
 	@echo "  ${BOLD}$(NAME) list${RESET}    - List available levels"
 	@echo "  ${BOLD}$(NAME) get 1${RESET}   - Get a random exercise from level 1"
 
-user-install:
-	@echo "${GREEN}Installing ${BOLD}$(NAME)${RESET}${GREEN} for current user...${RESET}"
-	@mkdir -p $(SUBJECTS_DIR)
-	@mkdir -p $(PROGRAM_DIR)
-	@cp -r subjects/* $(SUBJECTS_DIR)
-	@cp $(SRC_FILES) $(PROGRAM_DIR)/
-	@mkdir -p $(HOME)/bin
-	@echo "#!/bin/bash" > $(HOME)/bin/$(NAME)
-	@echo "python3 $(PROGRAM_DIR)/vfy.py \"\$$@\"" >> $(HOME)/bin/$(NAME)
-	@chmod +x $(HOME)/bin/$(NAME)
-	@echo "${GREEN}Installation completed! ${BOLD}You can now use the '$(NAME)' command.${RESET}"
-	@echo "${YELLOW}Make sure $(HOME)/bin is in your PATH.${RESET}"
-	@echo "You may need to add this line to your .bashrc or .zshrc:"
-	@echo "  ${BOLD}export PATH=\"\$$HOME/bin:\$$PATH\"${RESET}"
-	@echo ""
-	@echo "${CYAN}Try:${RESET}"
-	@echo "  ${BOLD}$(NAME) help${RESET}    - Show help"
-	@echo "  ${BOLD}$(NAME) list${RESET}    - List available levels"
-	@echo "  ${BOLD}$(NAME) get 1${RESET}   - Get a random exercise from level 1"
-
 uninstall:
 	@echo "${RED}Uninstalling ${BOLD}$(NAME)${RESET}${RED}...${RESET}"
 	@rm -f $(INSTALL_DIR)/$(NAME)
-	@rm -f $(HOME)/bin/$(NAME)
 	@rm -rf $(PROGRAM_SHARE_DIR)
 	@echo "${YELLOW}Do you want to remove the exercises too? (y/n)${RESET}"
 	@read resp; \
@@ -135,6 +115,7 @@ uninstall:
 		rm -rf $(SUBJECTS_DIR); \
 		rm -rf $(PROGRAM_DIR); \
 		rm -rf $(HOME)/.vfy; \
+		rm -rf $(HOME)/vfy_exercises; \
 		echo "${RED}Exercises removed.${RESET}"; \
 	else \
 		echo "${GREEN}Exercises remain in $(SUBJECTS_DIR)${RESET}"; \
@@ -146,4 +127,5 @@ clean:
 	@find . -name "*.pyc" -delete
 	@find . -name "__pycache__" -delete
 	@find . -name ".last_exercise" -delete
+	@rm -rf build/ dist/ *.egg-info/
 	@echo "${GREEN}Cleanup completed.${RESET}" 
