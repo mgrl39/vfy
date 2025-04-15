@@ -43,8 +43,17 @@ Installation is very simple:
 git clone https://github.com/mgrl39/vfy.git
 cd vfy
 
-# Install (requires sudo)
+# Install the core program (requires sudo)
 sudo make install
+
+# Download exercises 
+sudo make get-subjects
+```
+
+To update exercises later:
+
+```bash
+sudo make update-subjects
 ```
 
 ## 📝 Usage
@@ -85,6 +94,9 @@ You can create exercises manually:
    - `subject.txt`: Exercise description
    - `expected_output.txt`: Expected program output
    - `template.c`: Template code for users
+
+For more exercises, check out our separate exercises repository:
+[VFY Exercises Repository](https://github.com/mgrl39/vfydb)
 
 ## 🔄 Examples
 

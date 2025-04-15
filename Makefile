@@ -7,6 +7,7 @@ PROGRAM_SHARE_DIR = /usr/share/vfy
 SUBJECTS_DIR = $(HOME)/.vfy/subjects
 PROGRAM_DIR = $(HOME)/.vfy/program
 SRC_FILES = src/__init__.py src/vfy.py src/config.py src/colors.py src/commands.py src/utils.py src/progress.py
+SUBJECTS_REPO = git@github.com:mgrl39/vfydb.git
 
 # Colors and formatting
 RED    = \033[0;31m
@@ -19,7 +20,7 @@ WHITE  = \033[0;37m
 BOLD   = \033[1m
 RESET  = \033[0m
 
-.PHONY: all install uninstall clean help setup
+.PHONY: all install uninstall clean help setup get-subjects update-subjects
 
 all: help
 
@@ -28,8 +29,10 @@ help:
 	@echo "${BOLD}===============================================${RESET}"
 	@echo ""
 	@echo "${BOLD}Usage:${RESET}"
-	@echo "  ${YELLOW}make setup${RESET}         - Create necessary directories and example exercises"
+	@echo "  ${YELLOW}make setup${RESET}         - Create necessary directories"
 	@echo "  ${GREEN}make install${RESET}        - Install vfy system-wide"
+	@echo "  ${YELLOW}make get-subjects${RESET}  - Download exercises from the subjects repository"
+	@echo "  ${YELLOW}make update-subjects${RESET} - Update exercises from the subjects repository"
 	@echo "  ${RED}make uninstall${RESET}      - Uninstall vfy"
 	@echo "  ${BLUE}make clean${RESET}          - Remove temporary files"
 	@echo ""
@@ -41,30 +44,28 @@ help:
 
 setup:
 	@echo "${YELLOW}Setting up directory structure...${RESET}"
-	@mkdir -p subjects/level_1/ex00
-	@mkdir -p subjects/level_1/ex01
-	@mkdir -p subjects/level_1/ex02
-	@mkdir -p subjects/level_2/ex00
-	
-	@echo "${YELLOW}Creating example exercises...${RESET}"
-	
-	@printf "Exercise: Hello World\n------------------\n\nWrite a program that prints \"Hello World\" (without quotes) and ends with a newline.\n\nExample output:\nHello World" > subjects/level_1/ex00/subject.txt
-	@printf "Hello World" > subjects/level_1/ex00/expected_output.txt
-	@printf "#include <stdio.h>\n\nint main(void) {\n    // Your code here\n    \n    return 0;\n}" > subjects/level_1/ex00/template.c
-	
-	@printf "Exercise: Sum Two Numbers\n------------------\n\nWrite a program that adds two integers (42 and 27) and prints the result.\n\nExample output:\n69" > subjects/level_1/ex01/subject.txt
-	@printf "69" > subjects/level_1/ex01/expected_output.txt
-	@printf "#include <stdio.h>\n\nint main(void) {\n    // Add the numbers 42 and 27\n    // Print the result\n    \n    return 0;\n}" > subjects/level_1/ex01/template.c
-	
-	@printf "Exercise: Print 1 to 10\n------------------\n\nWrite a program that prints numbers from 1 to 10, each on a new line.\n\nExample output:\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10" > subjects/level_1/ex02/subject.txt
-	@printf "1\n2\n3\n4\n5\n6\n7\n8\n9\n10" > subjects/level_1/ex02/expected_output.txt
-	@printf "#include <stdio.h>\n\nint main(void) {\n    // Use a loop to print numbers 1 to 10\n    \n    return 0;\n}" > subjects/level_1/ex02/template.c
-	
-	@printf "Exercise: FizzBuzz\n------------------\n\nWrite a program that prints the numbers from 1 to 15.\nFor multiples of 3, print \"Fizz\" instead of the number.\nFor multiples of 5, print \"Buzz\" instead of the number.\nFor multiples of both 3 and 5, print \"FizzBuzz\".\n\nExample output:\n1\n2\nFizz\n4\nBuzz\nFizz\n7\n8\nFizz\nBuzz\n11\nFizz\n13\n14\nFizzBuzz" > subjects/level_2/ex00/subject.txt
-	@printf "1\n2\nFizz\n4\nBuzz\nFizz\n7\n8\nFizz\nBuzz\n11\nFizz\n13\n14\nFizzBuzz" > subjects/level_2/ex00/expected_output.txt
-	@printf "#include <stdio.h>\n\nint main(void) {\n    // Loop from 1 to 15\n    // If multiple of 3, print \"Fizz\"\n    // If multiple of 5, print \"Buzz\"\n    // If multiple of both, print \"FizzBuzz\"\n    // Otherwise print the number\n    \n    return 0;\n}" > subjects/level_2/ex00/template.c
-	
+	@mkdir -p $(HOME)/.vfy
+	@mkdir -p $(HOME)/vfy_exercises
 	@echo "${GREEN}Setup complete!${RESET}"
+
+get-subjects:
+	@echo "${YELLOW}Downloading exercises from repository...${RESET}"
+	@mkdir -p $(SUBJECTS_DIR)
+	@if [ -d "$(SUBJECTS_DIR)/.git" ]; then \
+		echo "${BLUE}Subjects repository already exists. Use 'make update-subjects' to update.${RESET}"; \
+	else \
+		git clone $(SUBJECTS_REPO) $(SUBJECTS_DIR); \
+		echo "${GREEN}Exercises downloaded successfully to $(SUBJECTS_DIR)${RESET}"; \
+	fi
+
+update-subjects:
+	@echo "${YELLOW}Updating exercises from repository...${RESET}"
+	@if [ -d "$(SUBJECTS_DIR)/.git" ]; then \
+		cd $(SUBJECTS_DIR) && git pull; \
+		echo "${GREEN}Exercises updated successfully${RESET}"; \
+	else \
+		echo "${RED}Subjects repository not found. Use 'make get-subjects' first.${RESET}"; \
+	fi
 
 install: setup
 	@echo "${GREEN}Installing ${BOLD}$(NAME)${RESET}${GREEN}...${RESET}"
@@ -85,20 +86,13 @@ install: setup
 	@echo "  cp $(PROGRAM_SHARE_DIR)/src/* \$$HOME/.vfy/program/" >> $(INSTALL_DIR)/$(NAME)
 	@echo "fi" >> $(INSTALL_DIR)/$(NAME)
 	@echo "" >> $(INSTALL_DIR)/$(NAME)
-	@echo "# Copy exercise subjects if they don't exist" >> $(INSTALL_DIR)/$(NAME)
-	@echo "if [ ! -d \$$HOME/.vfy/subjects/level_1 ]; then" >> $(INSTALL_DIR)/$(NAME)
-	@echo "  cp -r $(PROGRAM_SHARE_DIR)/subjects/* \$$HOME/.vfy/subjects/ 2>/dev/null || :" >> $(INSTALL_DIR)/$(NAME)
-	@echo "fi" >> $(INSTALL_DIR)/$(NAME)
-	@echo "" >> $(INSTALL_DIR)/$(NAME)
 	@echo "# Run with clean environment to avoid Python conflicts" >> $(INSTALL_DIR)/$(NAME)
 	@echo "env -i HOME=\$$HOME PATH=/usr/bin:/bin:/usr/local/bin LANG=\$$LANG python3 \$$HOME/.vfy/program/vfy.py \"\$$@\"" >> $(INSTALL_DIR)/$(NAME)
 	@chmod +x $(INSTALL_DIR)/$(NAME)
 	
-	# Copy example exercises to system-wide location
-	@mkdir -p $(PROGRAM_SHARE_DIR)/subjects
-	@cp -r subjects/* $(PROGRAM_SHARE_DIR)/subjects/
-	
 	@echo "${GREEN}Installation completed! ${BOLD}You can now use the '$(NAME)' command.${RESET}"
+	@echo ""
+	@echo "${YELLOW}Note: You need to download exercises with 'make get-subjects'${RESET}"
 	@echo ""
 	@echo "${CYAN}Try:${RESET}"
 	@echo "  ${BOLD}$(NAME) help${RESET}    - Show help"
